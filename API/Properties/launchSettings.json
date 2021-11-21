@@ -27,5 +27,11 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  "Watch": {
+    "commandName": "Executable",
+    "executablePath": "API.exe",
+    "workingDirectory": "$(ProjectDir)",
+    "commandLineArgs": "watch run"
   }
 }
