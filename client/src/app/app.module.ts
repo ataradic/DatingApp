@@ -12,6 +12,12 @@ import { RegisterComponent } from './register/register.component';
 
 import myLocaleHe from '@angular/common/locales/he'
 import { registerLocaleData } from '@angular/common/';
+import { MemberListComponent } from './members/member-list/member-list.component';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+import { ToastrModule } from 'ngx-toastr';
+import { SharedModule } from './_modules/shared.module';
 registerLocaleData(myLocaleHe);
 
 
@@ -20,7 +26,11 @@ registerLocaleData(myLocaleHe);
     AppComponent,
     NavComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    MemberListComponent,
+    MemberDetailComponent,
+    ListsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +38,7 @@ registerLocaleData(myLocaleHe);
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    BsDropdownModule.forRoot()
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
