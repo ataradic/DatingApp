@@ -23,6 +23,8 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './_interceptor/error.interceptor';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 registerLocaleData(myLocaleHe);
 
 
@@ -38,7 +40,8 @@ registerLocaleData(myLocaleHe);
     MessagesComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    TestErrorsComponent
+    TestErrorsComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ registerLocaleData(myLocaleHe);
     SharedModule
   ],
   providers:
-    [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
+    [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
