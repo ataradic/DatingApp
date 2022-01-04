@@ -34,9 +34,10 @@ namespace API.Controllers
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return new UserDto{
+            return new UserDto
+            {
                 UserName = user.UserName,
-               Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user)
             };
         }
         [HttpPost("login")]
@@ -50,11 +51,11 @@ namespace API.Controllers
             {
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
             }
-              return new UserDto
+            return new UserDto
             {
                 UserName = user.UserName,
-               Token = _tokenService.CreateToken(user)
-            }; 
+                Token = _tokenService.CreateToken(user)
+            };
         }
         public async Task<bool> UserExists(string username)
         {
