@@ -1,3 +1,4 @@
+import { Photo } from './../_models/photo';
 import { Member } from './../_models/member';
 import { User } from '../_models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -25,7 +26,7 @@ export class MemberService {
   }
   getMember(username: string) {
     const user = this.members.find(x => x.username === username);
-    if (user!==undefined) return of(user);
+    if (user !== undefined) return of(user);
     return this.http.get<Member>(this.baseurl + "users/" + username);
   }
   updateMember(member: Member) {
@@ -35,5 +36,11 @@ export class MemberService {
         this.members[index] = member;
       })
     );
+  }
+  setMainPhoto(photoId: number) {
+    return this.http.put(this.baseurl + 'users/set-main-photo/' + photoId, {});
+  }
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.baseurl + 'users/delete-photo/' + photoId);
   }
 }

@@ -22,24 +22,25 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error) {
           switch (error.status) {
             case 400:
-              console.log("400:" + error.error);
-              if (error.errors) {
+              console.log("400:" + error.error.errors);
+              if (error.error.errors) {
                 const modalStateErrors = [];
-                for (const key in error.errors) {
-                  if (error.errors[key]) {
-                    console.log("400:" + error.errors);
-                    modalStateErrors.push(error.errors[key]);
+                for (const key in error.error.errors) {
+                  if (error.error.errors[key]) {
+                    console.log("400:" + error.error.errors[key]);
+                    modalStateErrors.push(error.error.errors[key]);
                   }
                 }
                 throw modalStateErrors.flat();
               }
               else {
-                this.toaster.error(error.statusText, error.status);
+                this.toaster.error(error.error, error.statusText + " " + error.status);
               }
 
               break;
             case 401:
-              this.toaster.error(error.statusText, error.status, error.error);
+              error.statusText = "Unauthrized";
+              this.toaster.error(error.error, error.statusText + " " + error.status);
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
