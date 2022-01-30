@@ -13,6 +13,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using API.Extensions;
 using System.Linq;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -29,10 +30,16 @@ namespace API.Controllers
             _userRepository = userRepository;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> getUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> getUsers([FromQuery] UserParams userParams)
         {
-            return Ok(await _userRepository.GetMembersAsync());
+            var user=await _userRepository.GetUserByNameAsync(User.GetUserName());
+            userParams.CurrentUserName = user.UserName;
+            if (string.IsNullOrEmpty(userParams.Gender))
+                userParams.Gender = user.Gender == "female" ? "male" : "female";
 
+            var users = await _userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.ToatalCount, users.TotalPages);
+            return Ok(users);
         }
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> getUser(string username)
