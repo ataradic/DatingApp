@@ -35,6 +35,7 @@ export class MemberListComponent implements OnInit {
       this.pagination = response.pagination;
     });
   }
+  
   pageChanged(event: any) {
     console.log(event);
     this.userParams.pageNumber = event.page;
